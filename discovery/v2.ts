@@ -236,7 +236,42 @@ class DiscoveryV2 extends BaseService {
 
     return this.createRequest(parameters);
   };
+public getExpansions(params: DiscoveryV2.GetCollectionParams): Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['projectId', 'collectionId'];
 
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const query = {
+      'version': this.version
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+      'collection_id': _params.collectionId
+    };
+
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getCollection');
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/collections/{collection_id}/expansions',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
   /**
    * Update a collection.
    *
